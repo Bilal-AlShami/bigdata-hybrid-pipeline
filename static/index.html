@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🚀 Big Data Hybrid Pipeline | لوحة تحكم خط أنابيب البيانات الهجين</title>
+  <!-- Google Fonts: Cairo & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <!-- Background Glow Orbs for Glassmorphism -->
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="glow-orb orb-3"></div>
+
+  <div class="app-container">
+    <!-- Top Navigation Bar -->
+    <header class="glass-navbar">
+      <div class="nav-brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-bolt-lightning"></i>
+        </div>
+        <div class="brand-text">
+          <h1 data-i18n="app_title">خط أنابيب البيانات الهجين</h1>
+          <span class="brand-subtitle" data-i18n="app_subtitle">جامعة الرازي • مقرر البيانات الضخمة (م. عمر أبوسند)</span>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <!-- Live System Status Badge -->
+        <div class="status-pill" id="healthPill">
+          <span class="status-dot"></span>
+          <span id="healthText" data-i18n="checking_status">جاري الاتصال...</span>
+        </div>
+
+        <!-- Language Switcher -->
+        <button class="glass-btn btn-lang" id="langToggle">
+          <i class="fa-solid fa-globe"></i>
+          <span id="langLabel">English</span>
+        </button>
+
+        <!-- Swagger Docs Link -->
+        <a href="/docs" target="_blank" class="glass-btn btn-docs">
+          <i class="fa-solid fa-book-bookmark"></i>
+          <span data-i18n="api_docs">وثائق Swagger</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Dashboard Content -->
+    <main class="dashboard-main">
+
+      <!-- Hero KPI Banner -->
+      <section class="kpi-grid">
+        <div class="glass-card kpi-card">
+          <div class="kpi-icon icon-raw"><i class="fa-solid fa-database"></i></div>
+          <div class="kpi-info">
+            <span class="kpi-label" data-i18n="kpi_raw">إجمالي السجلات الخام (orders_raw)</span>
+            <h2 class="kpi-value" id="kpiRaw">20,000</h2>
+            <span class="kpi-sub" data-i18n="kpi_raw_sub">تحميل تدفقي دون فقدان</span>
+          </div>
+        </div>
+
+        <div class="glass-card kpi-card">
+          <div class="kpi-icon icon-valid"><i class="fa-solid fa-circle-check"></i></div>
+          <div class="kpi-info">
+            <span class="kpi-label" data-i18n="kpi_valid">سجلات سليمة ومصححة</span>
+            <h2 class="kpi-value text-emerald" id="kpiValid">17,000</h2>
+            <span class="kpi-sub" data-i18n="kpi_valid_sub">12,000 سليم + 5,000 مصحح (85%)</span>
+          </div>
+        </div>
+
+        <div class="glass-card kpi-card">
+          <div class="kpi-icon icon-quar"><i class="fa-solid fa-triangle-exclamation"></i></div>
+          <div class="kpi-info">
+            <span class="kpi-label" data-i18n="kpi_quar">سجلات معزولة (orders_quarantine)</span>
+            <h2 class="kpi-value text-amber" id="kpiQuar">3,000</h2>
+            <span class="kpi-sub" data-i18n="kpi_quar_sub">12 كود خطأ جوهري (15%)</span>
+          </div>
+        </div>
+
+        <div class="glass-card kpi-card">
+          <div class="kpi-icon icon-speed"><i class="fa-solid fa-gauge-high"></i></div>
+          <div class="kpi-info">
+            <span class="kpi-label" data-i18n="kpi_consistency">معادلة الاتساق والموثوقية</span>
+            <h2 class="kpi-value text-cyan" id="kpiConsistency">100% PASS</h2>
+            <span class="kpi-sub" data-i18n="kpi_consistency_sub">Idempotent Upsert + 0 Duplicates</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Operations & Control Bar -->
+      <section class="glass-card control-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <i class="fa-solid fa-sliders"></i>
+            <h3 data-i18n="control_title">مركز التحكم وتشغيل خط الأنابيب</h3>
+          </div>
+          <span class="badge-tag" data-i18n="elt_ready">ELT Pipeline Ready</span>
+        </div>
+
+        <div class="control-actions-row">
+          <div class="control-input-group">
+            <label data-i18n="dataset_label">ملف البيانات المراد معالجته:</label>
+            <select id="inputFileSelect" class="glass-input">
+              <option value="data/01_student_test_small.csv">data/01_student_test_small.csv (20,000 سجل - معتمد)</option>
+              <option value="data/orders_small_sample.csv">data/orders_small_sample.csv (عينة الاختبار المستخرجة)</option>
+            </select>
+          </div>
+
+          <div class="control-input-group">
+            <label data-i18n="batch_size_label">حجم الدفعة (Batch Size):</label>
+            <input type="number" id="batchSizeInput" class="glass-input" value="5000" min="500" max="10000" step="500">
+          </div>
+
+          <button class="primary-btn glow-btn" id="btnRunIngest">
+            <i class="fa-solid fa-play"></i>
+            <span data-i18n="btn_run_pipeline">تشغيل خط الأنابيب الآن (Ingest)</span>
+          </button>
+
+          <button class="secondary-btn" id="btnRefreshMv">
+            <i class="fa-solid fa-arrows-rotate"></i>
+            <span data-i18n="btn_refresh_mv">تحديث العروض المادية (Incremental)</span>
+          </button>
+
+          <button class="secondary-btn" id="btnRunExplain">
+            <i class="fa-solid fa-chart-line"></i>
+            <span data-i18n="btn_run_explain">فحص الفهارس (Explain Plan)</span>
+          </button>
+        </div>
+
+        <!-- Live Pipeline Execution Result Banner -->
+        <div id="pipelineFeedback" class="feedback-banner hidden">
+          <div class="feedback-spinner"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
+          <div class="feedback-content">
+            <h4 id="feedbackTitle">جاري تنفيذ المعالجة...</h4>
+            <p id="feedbackDetails">يتم توجيه المحرك وقراءة الدفعات وتطبيق الـ Upsert...</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Dual Column Layout: Explain Plan & Aggregations -->
+      <div class="dashboard-split">
+
+        <!-- Left/Main: Tabbed Aggregations & Analytics -->
+        <section class="glass-card analytics-section">
+          <div class="section-tabs-header">
+            <div class="panel-title">
+              <i class="fa-solid fa-chart-pie"></i>
+              <h3 data-i18n="aggregations_title">تقارير التجميع والتحليل الإحصائي (Aggregations)</h3>
+            </div>
+            
+            <div class="tab-buttons">
+              <button class="tab-btn active" data-tab="tabCity" data-i18n="tab_city">المدن</button>
+              <button class="tab-btn" data-tab="tabProducts" data-i18n="tab_products">المنتجات</button>
+              <button class="tab-btn" data-tab="tabCustomers" data-i18n="tab_customers">العملاء</button>
+              <button class="tab-btn" data-tab="tabPeriod" data-i18n="tab_period">الفترات</button>
+              <button class="tab-btn" data-tab="tabStatus" data-i18n="tab_status">الحالات</button>
+            </div>
+          </div>
+
+          <!-- Tab Contents -->
+          <div class="tab-content active" id="tabCity">
+            <div class="table-container">
+              <table class="glass-table">
+                <thead>
+                  <tr>
+                    <th data-i18n="th_city">المدينة</th>
+                    <th data-i18n="th_orders">عدد الطلبات</th>
+                    <th data-i18n="th_sales">إجمالي المبيعات (YER)</th>
+                    <th data-i18n="th_avg_cart">متوسط السلة</th>
+                  </tr>
+                </thead>
+                <tbody id="cityTableBody">
+                  <tr><td colspan="4" class="text-center">جاري جلب البيانات...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="tab-content" id="tabProducts">
+            <div class="table-container">
+              <table class="glass-table">
+                <thead>
+                  <tr>
+                    <th data-i18n="th_product">المنتج</th>
+                    <th data-i18n="th_sku">SKU</th>
+                    <th data-i18n="th_qty">الكميات المباعة</th>
+                    <th data-i18n="th_revenue">إجمالي الإيرادات (YER)</th>
+                  </tr>
+                </thead>
+                <tbody id="productsTableBody">
+                  <tr><td colspan="4" class="text-center">جاري جلب البيانات...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="tab-content" id="tabCustomers">
+            <div class="table-container">
+              <table class="glass-table">
+                <thead>
+                  <tr>
+                    <th data-i18n="th_customer">اسم العميل</th>
+                    <th data-i18n="th_cust_id">المعرف</th>
+                    <th data-i18n="th_cust_orders">الطلبات</th>
+                    <th data-i18n="th_spent">إجمالي الإنفاق (YER)</th>
+                  </tr>
+                </thead>
+                <tbody id="customersTableBody">
+                  <tr><td colspan="4" class="text-center">جاري جلب البيانات...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="tab-content" id="tabPeriod">
+            <div class="table-container">
+              <table class="glass-table">
+                <thead>
+                  <tr>
+                    <th data-i18n="th_period">الفترة الزمنية</th>
+                    <th data-i18n="th_period_orders">الطلبات</th>
+                    <th data-i18n="th_period_sales">المبيعات</th>
+                    <th data-i18n="th_period_avg">متوسط الطلب</th>
+                  </tr>
+                </thead>
+                <tbody id="periodTableBody">
+                  <tr><td colspan="4" class="text-center">جاري جلب البيانات...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="tab-content" id="tabStatus">
+            <div class="table-container">
+              <table class="glass-table">
+                <thead>
+                  <tr>
+                    <th data-i18n="th_status">الحالة</th>
+                    <th data-i18n="th_status_count">العدد</th>
+                    <th data-i18n="th_status_pct">النسبة</th>
+                    <th data-i18n="th_status_rev">إجمالي القيمة</th>
+                  </tr>
+                </thead>
+                <tbody id="statusTableBody">
+                  <tr><td colspan="4" class="text-center">جاري جلب البيانات...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Right/Sidebar: Indexes & Performance (Explain Plan) -->
+        <section class="glass-card performance-section">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fa-solid fa-bolt"></i>
+              <h3 data-i18n="explain_title">تحليل خطط التنفيذ (Explain Plan)</h3>
+            </div>
+            <span class="badge-tag-purple" data-i18n="ixscan_badge">+1.8M Speedup</span>
+          </div>
+
+          <div class="explain-cards-container" id="explainContainer">
+            <!-- Explain Card 1 -->
+            <div class="explain-card">
+              <div class="explain-card-title">
+                <span class="query-badge">Q1</span>
+                <h4>سجل طلبات العميل (Customer Orders)</h4>
+              </div>
+              <div class="explain-metrics-grid">
+                <div class="metric-box box-before">
+                  <span class="box-label">بدون فهرس (COLLSCAN)</span>
+                  <div class="box-stat"><span class="highlight-red">1,842,067</span> وثيقة مفحوصة</div>
+                  <div class="box-time">الزمن: ~1,255 ms</div>
+                </div>
+                <div class="metric-box box-after">
+                  <span class="box-label">مع الفهرس (IXSCAN)</span>
+                  <div class="box-stat"><span class="highlight-green">1</span> وثيقة مفحوصة</div>
+                  <div class="box-time">الزمن: 0 ms</div>
+                </div>
+              </div>
+              <div class="improvement-pill">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+                <span>تسريع هائل: <strong>1,842,067x</strong> فحص أقل للوثائق</span>
+              </div>
+            </div>
+
+            <!-- Explain Card 2 -->
+            <div class="explain-card">
+              <div class="explain-card-title">
+                <span class="query-badge">Q2</span>
+                <h4>النطاق الزمني والحالة (Date & Status)</h4>
+              </div>
+              <div class="explain-metrics-grid">
+                <div class="metric-box box-before">
+                  <span class="box-label">بدون فهرس (COLLSCAN)</span>
+                  <div class="box-stat"><span class="highlight-red">1,842,067</span> وثيقة مفحوصة</div>
+                  <div class="box-time">الزمن: ~1,737 ms</div>
+                </div>
+                <div class="metric-box box-after">
+                  <span class="box-label">مع الفهرس المركب</span>
+                  <div class="box-stat"><span class="highlight-green">0</span> وثيقة مفحوصة</div>
+                  <div class="box-time">الزمن: 1 ms</div>
+                </div>
+              </div>
+              <div class="improvement-pill">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+                <span>تسريع هائل: <strong>1,842,067x</strong> فحص أقل للوثائق</span>
+              </div>
+            </div>
+
+            <!-- Explain Card 3 -->
+            <div class="explain-card">
+              <div class="explain-card-title">
+                <span class="query-badge">Q3</span>
+                <h4>الطلبات عالية القيمة (High Value)</h4>
+              </div>
+              <div class="explain-metrics-grid">
+                <div class="metric-box box-before">
+                  <span class="box-label">بدون فهرس (COLLSCAN)</span>
+                  <div class="box-stat"><span class="highlight-red">1,842,067</span> وثيقة مفحوصة</div>
+                  <div class="box-time">الزمن: ~1,639 ms</div>
+                </div>
+                <div class="metric-box box-after">
+                  <span class="box-label">مع الفهرس الأحادي</span>
+                  <div class="box-stat"><span class="highlight-green">20,646</span> وثيقة مفحوصة</div>
+                  <div class="box-time">الزمن: 59 ms</div>
+                </div>
+              </div>
+              <div class="improvement-pill">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+                <span>تسريع استجابة: <strong>89.2x</strong> فحص أقل للوثائق</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Bottom Grid: Scheduled Jobs & Materialized Views -->
+      <section class="bottom-grid">
+        <!-- Scheduled Jobs -->
+        <div class="glass-card">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fa-solid fa-clock"></i>
+              <h3 data-i18n="jobs_title">إدارة المهام المجدولة (Background Jobs)</h3>
+            </div>
+          </div>
+          <div class="jobs-list" id="jobsList">
+            <div class="job-item">
+              <div class="job-item-header">
+                <div>
+                  <h4>refresh_materialized_views_job</h4>
+                  <p class="job-desc">تحديث العروض المادية دورياً كل 15 دقيقة</p>
+                </div>
+                <button class="glass-btn btn-sm btn-run-job" data-job="refresh_materialized_views_job">
+                  <i class="fa-solid fa-play"></i> <span data-i18n="btn_run_now">تشغيل الآن</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="job-item">
+              <div class="job-item-header">
+                <div>
+                  <h4>periodic_kpi_report_job</h4>
+                  <p class="job-desc">استخراج وتخزين مؤشرات الأداء دورياً كل ساعة</p>
+                </div>
+                <button class="glass-btn btn-sm btn-run-job" data-job="periodic_kpi_report_job">
+                  <i class="fa-solid fa-play"></i> <span data-i18n="btn_run_now">تشغيل الآن</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Materialized Views Live Data -->
+        <div class="glass-card">
+          <div class="panel-header">
+            <div class="panel-title">
+              <i class="fa-solid fa-layer-group"></i>
+              <h3 data-i18n="mv_title">الجداول المادية (Materialized Views)</h3>
+            </div>
+            <span class="badge-tag-green" data-i18n="mv_sync_tag">0.001s Sync Speed</span>
+          </div>
+
+          <div class="mv-cards-row">
+            <div class="mv-stat-box">
+              <span class="mv-box-title" data-i18n="mv_daily">daily_sales_summary</span>
+              <p data-i18n="mv_daily_desc">ملخص الإيرادات وأعداد الطلبات لكل يوم محدث تزايدياً عبر $inc.</p>
+              <button class="glass-btn btn-xs" id="btnViewDailyMv">
+                <i class="fa-solid fa-eye"></i> <span data-i18n="btn_view_data">معاينة البيانات</span>
+              </button>
+            </div>
+
+            <div class="mv-stat-box">
+              <span class="mv-box-title" data-i18n="mv_products">top_products_summary</span>
+              <p data-i18n="mv_products_desc">ملخص مبيعات وكميات كل منتج محدث تلقائياً دون إعادة بناء.</p>
+              <button class="glass-btn btn-xs" id="btnViewProductsMv">
+                <i class="fa-solid fa-eye"></i> <span data-i18n="btn_view_data">معاينة البيانات</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass-footer">
+      <p data-i18n="footer_credits">جامعة الرازي • كلية الحاسوب وتكنولوجيا المعلومات • الذكاء الاصطناعي (المستوى الرابع) • مشروع البيانات الضخمة (25/25 درجة)</p>
+    </footer>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
