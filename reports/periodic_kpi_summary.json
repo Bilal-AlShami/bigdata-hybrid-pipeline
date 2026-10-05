@@ -1,0 +1,8 @@
+{
+  "report_timestamp": "2026-10-05T20:16:32.296539",
+  "total_validated_orders": 1842067,
+  "total_revenue_yer": 473724079500.0,
+  "avg_order_value_yer": 257169.84,
+  "top_city_by_sales": "صنعاء",
+  "materialized_views_status": "ONLINE"
+}
