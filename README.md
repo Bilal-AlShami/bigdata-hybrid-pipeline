@@ -599,29 +599,8 @@ ecommerce_db
 
 ---
 
-## 8. 🎙️ سيناريو العرض والمناقشة الشامل أمام الدكتور والمهندس (Defense Walkthrough)
-
-لضمان تقديم عرض استثنائي يبهر لجنة التقييم (م. عمر أبوسند) خلال 10 دقائق:
-
-### 🎙️ الدقائق 1 - 5: استعراض المشروع النصفي (Phase 1):
-1. **الخطوة 1 (File Router):** شغّل في الطرفية:
-   `py -3.12 main.py --file data/01_student_test_small.csv`
-   واشرح للمهندس كيف فحص الموجه حجم الملف (8.6MB) واختار تلقائياً محرك `Python Batch`، مبرراً أن Spark يمتلك Overhead يتراوح بين 5 إلى 10 ثوانٍ لا يناسب الملفات الصغيرة.
-2. **الخطوة 2 (Raw Ingestion):** افتح برنامج **MongoDB Compass** على مجموعة `orders_raw` وأظهر أن كافة السجلات الـ 20,000 وصلت كاملة دون أي حذف أو إسقاط مع حقول الميتا-داتا الستة (`run_id`, `source_file`, `source_row_number`, `ingested_at`, `engine_used`, `raw_record`).
-3. **الخطوة 3 (Data Quality & Audit Trail):** افتح مجموعة `orders_validated` واستعرض سجلاً مصححاً، وأظهر له مصفوفة `corrections` التي تثبت تاريخ وتفاصيل التصحيح (مثل تحويل الأرقام العربية أو إزالة فواصل الآلاف). ثم افتح `orders_quarantine` واعرض سجلاً معزولاً مع كود الخطأ في `quarantine_reasons`.
-4. **الخطوة 4 (Consistency & Idempotency):** افتح ملف `reports/results.json` وأظهر تحقق معادلة الاتساق بدقة مطلقة ($12000 + 5000 + 3000 = 20000$). ثم أعد تشغيل السكربت أمامه مباشرة وأظهر في النتائج أن عدد السجلات لم يزداد قط وحقق صفر تكرارات (`0 Duplicates`).
-
-### 🎙️ الدقائق 6 - 10: استعراض المشروع النهائي (Phase 2):
-1. **الخطوة 1 (لوحة التحكم Glassmorphism):** شغّل الملف `run_api.bat` أو افتح المتصفح على `http://127.0.0.1:8000`. ابدأ بإبهار اللجنة بالواجهة الرسومية الزجاجية الفاخرة، وبدل اللغة من العربية إلى الإنجليزية ثم العربية بضغطة زر.
-2. **الخطوة 2 (تشغيل الـ Ingest حياً):** اضغط من داخل لوحة التحكم على زر `تشغيل خط الأنابيب الآن (Run Ingestion)` ودع اللجنة تشاهد شريط المعالجة المتحرك وهو ينجز 20,000 سجل بسرعة تفوق 32,000 سجل/ثانية!
-3. **الخطوة 3 (الفهارس وتحليل Explain):** انتقل إلى بطاقة مقارنة الفهارس، واستعرض كيف قفز الأداء بانخفاض فحص الوثائق من **1,842,067 وثيقة** (`COLLSCAN`) إلى **وثيقة واحدة فقط** (`IXSCAN`) بسرعة تسريع تفوق **1,842,000x**.
-4. **الخطوة 4 (التجميعات الـ 5):** تنقل بين تبويبات التحليلات (المدن، المنتجات، العملاء، الفترات الزمنية) واستعرض دقة الأرقام الإحصائية.
-5. **الخطوة 5 (الجداول المادية والتحديث التزايدي):** اضغط على زر "تحديث العروض المادية تزايدياً" وأظهر اكتمال التحديث في **0.001 ثانية**.
-6. **الخطوة 6 (خاتمة الاختبارات الآلية):** شغّل في الطرفية `py -3.12 -m pytest tests/ -v` ودع شاشة الطرفية تعرض بنجاح أخضر مبهر كافة **الاختبارات الـ 75 الناجحة بنسبة 100%**!
-
-
 ### 🛡️ الحقوق والترخيص
-تم التطوير بكل شغف بواسطة **المهندس بلال الشامي*
+تم التطوير بكل شغف بواسطة **المهندس بلال الشامي**
 ---
 # 🚀 Enterprise Hybrid Data Pipeline
 ### The Unified and Comprehensive Project for Big Data Course (Practical) - Al-Razi University
@@ -1351,30 +1330,6 @@ py -3.12 -m uvicorn src.api:app --host 127.0.0.1 --port 8080 --reload
 * **Solution:** For standard test datasets (under 200MB), the pipeline automatically activates the ultra-fast `Python Batch` engine, which does not require Spark or Java. For massive datasets, install JDK 17 and configure the `JAVA_HOME` system environment variable.
 
 ---
-
-<a id="en-8"></a>
-## 8. 🎙️ Comprehensive Defense and Walkthrough Scenario (Defense Walkthrough)
-
-To deliver an exceptional 10-minute project presentation before the evaluation committee (Eng. Omar Abosand):
-
-### 🎙️ Minutes 1 - 5: Midterm Project Review (Phase 1):
-
-1. **Step 1 (File Router):** Run in the terminal:
-`py -3.12 main.py --file data/01_student_test_small.csv`
-Explain to the evaluator how the router checked the file size (8.6MB) and automatically selected the `Python Batch` engine, justifying that Spark introduces 5 to 10 seconds of initialization overhead which is inefficient for small datasets.
-2. **Step 2 (Raw Ingestion):** Open **MongoDB Compass** to collection `orders_raw` and show that all 20,000 records were ingested in their entirety without loss, highlighting the 6 tracking metadata fields (`run_id`, `source_file`, `source_row_number`, `ingested_at`, `engine_used`, `raw_record`).
-3. **Step 3 (Data Quality & Audit Trail):** Open `orders_validated`, inspect a corrected record, and present the `corrections` array showing correction timestamps and field deltas (such as Eastern Arabic numerals conversion or comma removals). Then open `orders_quarantine` and demonstrate an isolated record with its corresponding error code in `quarantine_reasons`.
-4. **Step 4 (Consistency & Idempotency):** Open `reports/results.json` and highlight exact verification of the consistency equation ($12000 + 5000 + 3000 = 20000$). Re-run the script in front of the evaluator to demonstrate idempotency and that document counts remain completely invariant (`0 Duplicates`).
-
-### 🎙️ Minutes 6 - 10: Final Project Review (Phase 2):
-
-1. **Step 1 (Glassmorphism Dashboard):** Execute `run_api.bat` or navigate to `http://127.0.0.1:8000`. Impress the committee with the modern visual design, showcasing instant language toggling between Arabic and English.
-2. **Step 2 (Live Ingestion Trigger):** Click `Run Ingestion Now` directly from the dashboard and let the committee observe the animated progress bar processing 20,000 records at speeds exceeding 32,000 records/sec!
-3. **Step 3 (Indexes & Explain Analysis):** Navigate to the index comparison card and highlight how indexing reduced document scans from **1,842,067 documents** (`COLLSCAN`) down to **exactly 1 document** (`IXSCAN`), representing an acceleration exceeding **1,842,000x**.
-4. **Step 4 (The 5 Aggregations):** Switch through analytical tabs (Cities, Products, Customers, Time Periods) and present the statistical outputs.
-5. **Step 5 (Materialized Views & Incremental Refresh):** Click "Refresh Materialized Views Incrementally" and show completion in **0.001 seconds**.
-6. **Step 6 (Automated Testing Conclusion):** Run `py -3.12 -m pytest tests/ -v` in the terminal and conclude your defense with the green output screen confirming all **75 tests passing at 100%**!
-
 ### 🛡️ Rights and Licensing
 
 Developed with passion by **Eng. Bilal Alshami**
