@@ -619,6 +619,9 @@ ecommerce_db
 5. **الخطوة 5 (الجداول المادية والتحديث التزايدي):** اضغط على زر "تحديث العروض المادية تزايدياً" وأظهر اكتمال التحديث في **0.001 ثانية**.
 6. **الخطوة 6 (خاتمة الاختبارات الآلية):** شغّل في الطرفية `py -3.12 -m pytest tests/ -v` ودع شاشة الطرفية تعرض بنجاح أخضر مبهر كافة **الاختبارات الـ 75 الناجحة بنسبة 100%**!
 
+
+### 🛡️ الحقوق والترخيص
+تم التطوير بكل شغف بواسطة **المهندس بلال الشامي*
 ---
 # 🚀 Enterprise Hybrid Data Pipeline
 
@@ -1360,3 +1363,7 @@ This architecture presents a complete **enterprise-grade hybrid data pipeline** 
 **Data Ingestion → Data Quality → ELT Transformation → MongoDB → Indexing → Aggregation → Materialized Views → Scheduling → FastAPI → Interactive Dashboard → Automated Testing**
 
 The result is a robust, scalable, auditable, and highly optimized Big Data solution designed to demonstrate both **practical engineering capability** and **academic mastery of modern data-processing architectures**.
+### 🛡️ License & Credit
+Developed with passion by **ENG.Bilal_Al-Shami** 🦅💎
+
+---
