@@ -619,3 +619,744 @@ ecommerce_db
 5. **الخطوة 5 (الجداول المادية والتحديث التزايدي):** اضغط على زر "تحديث العروض المادية تزايدياً" وأظهر اكتمال التحديث في **0.001 ثانية**.
 6. **الخطوة 6 (خاتمة الاختبارات الآلية):** شغّل في الطرفية `py -3.12 -m pytest tests/ -v` ودع شاشة الطرفية تعرض بنجاح أخضر مبهر كافة **الاختبارات الـ 75 الناجحة بنسبة 100%**!
 
+---
+# 🚀 Enterprise Hybrid Data Pipeline
+
+### A Unified and Comprehensive Practical Project for the Big Data Course — Al-Razi University
+
+**College of Computer and Information Technology — Fourth Level (Artificial Intelligence)**
+**Supervised by:** Eng. Omar Abu Sand
+**Approved Project Track:** Individual Work (Single Student)
+
+### Project Reference Documents
+
+* 📄 Midterm Project Document: `midterm data pipeline project.pdf`
+* 📄 Final Project Requirements: `متطلبات_المشروع_النهائي (1).pdf`
+* 💻 Target Runtime Environment: **Python 3.12 (64-bit)** | MongoDB Community 7.0+ | Apache Spark 3.5+
+
+---
+
+## 📑 Comprehensive Project Guide — Table of Contents
+
+1. [Overview and Unified Project Architecture](#1-overview-and-unified-project-architecture)
+2. [Technical Requirements and Environment Setup from Scratch](#2-technical-requirements-and-environment-setup-from-scratch)
+3. [⚡ Quick Project Execution Methods — 7 Comprehensive Approaches](#3-quick-project-execution-methods)
+
+   * 3.1 One-Click Automatic Execution (`run_api.bat`)
+   * 3.2 Execution and Control through the Glassmorphism Web Dashboard
+   * 3.3 Command-Line Execution (CLI) for Phase 1
+   * 3.4 Running the API Server through the Command Line for Phase 2
+   * 3.5 Execution through the Comprehensive Interactive Notebook (`main_notebook.ipynb`)
+   * 3.6 Direct Execution of Individual Software Modules (Modular Execution)
+   * 3.7 Running the Complete Automated Test Suite (75/75 Tests)
+4. [🔷 Part One: Midterm Project Details (Phase 1)](#4-part-one-midterm-project-details)
+
+   * 4.1 ELT Pipeline Architecture and Automatic Engine Routing (File Router)
+   * 4.2 The 10 Data Quality and Cleaning Rules with a Complete Audit Trail
+   * 4.3 The 12 Quarantine Conditions and Quarantine Collection
+   * 4.4 Reliability and Idempotency (Idempotent Upsert & Schema Validation)
+   * 4.5 Dual Checkpointing System
+   * 4.6 Proof of the Core Consistency Equation
+5. [🔶 Part Two: Final Project Details (Phase 2)](#5-part-two-final-project-details)
+
+   * 5.1 Premium Interactive Web Interface (Glassmorphism Web Dashboard)
+   * 5.2 Four Indexes, Five Queries, and Performance Analysis (Explain Analysis)
+   * 5.3 Five Statistical Aggregation Pipelines
+   * 5.4 Materialized Views and Intelligent Incremental Refresh
+   * 5.5 Background Scheduled Jobs and Operational Logs
+   * 5.6 Cloud Service Gateway with 12 Integrated Endpoints (FastAPI & Swagger UI)
+6. [📊 Data Schemas and MongoDB Collections](#6-data-schemas-and-mongodb-collections)
+7. [🛠️ Troubleshooting Guide](#7-troubleshooting-guide)
+8. [🎙️ Comprehensive Defense Walkthrough](#8-comprehensive-defense-walkthrough)
+
+---
+
+## 1. Overview and Unified Project Architecture
+
+The project has been meticulously engineered according to **Enterprise Big Data Engineering** standards, combining:
+
+* High-speed processing and large-scale data streaming through a **Streaming ELT Data Pipeline**.
+* An advanced analytics layer featuring MongoDB indexes and aggregation queries.
+* **Incrementally refreshed Materialized Views**.
+* A fully integrated **FastAPI** service layer with interactive **Swagger** documentation.
+* A modern bilingual **Glassmorphism Web Dashboard** supporting both Arabic and English.
+
+### Project Structure
+
+```text
+midterm-data-pipline/
+│
+├── requirements.txt                  # Required Python libraries
+├── pytest.ini                        # Automated testing configuration
+├── run_api.bat                       # Quick-start script for the dashboard and API
+├── .env.example                      # Secure environment-variable template
+├── .gitignore                        # Excludes large and temporary files
+├── main.py                            # Main CLI entry point for the data pipeline
+├── main_notebook.ipynb                # Comprehensive interactive notebook
+│
+├── static/                            # Premium Glassmorphism Dashboard
+│   ├── index.html                     # Bilingual user interface
+│   ├── style.css                      # Glassmorphism styling and visual effects
+│   └── app.js                         # Interaction, translation, and live-process engine
+│
+├── config/
+│   ├── __init__.py
+│   └── settings.py                    # MongoDB and dataset configuration
+│
+├── data/
+│   └── 01_student_test_small.csv      # Standard approved test dataset
+│
+├── reports/
+│   ├── results.json                   # Performance metrics and consistency results
+│   └── periodic_kpi_summary.json      # Periodic scheduled-task output
+│
+├── src/                               # Complete project source code
+│   ├── batch_loader.py                # Streaming/batch loader for small files
+│   ├── spark_loader.py                # Apache Spark loader for large files
+│   ├── file_router.py                 # Automatic engine selection based on file size
+│   ├── quality_rules.py               # 10 cleaning rules and 12 quarantine conditions
+│   ├── elt_pipeline.py                # ELT transformation engine
+│   ├── mongo_setup.py                 # MongoDB indexes and schema validation
+│   ├── metrics.py                     # Metrics calculation and consistency validation
+│   ├── create_small_sample.py         # Reproducible test-sample generator
+│   ├── indexes_queries.py             # Four indexes, five queries, and Explain analysis
+│   ├── aggregations.py                # Five statistical aggregation pipelines
+│   ├── materialized_views.py          # Materialized views and incremental refresh
+│   ├── scheduler.py                   # Background scheduled jobs and audit logs
+│   └── api.py                         # Unified FastAPI service gateway and Swagger UI
+│
+└── tests/                             # Automated test suite — 75 successful tests
+    ├── test_classification.py         # Classification and consistency tests
+    ├── test_cleaning_rules.py         # Cleaning and audit-trail tests
+    └── test_phase2.py                 # Phase 2 indexes, aggregations, views, and API tests
+```
+
+---
+
+## 2. Technical Requirements and Environment Setup
+
+> ⚡ **Quick Start Guide — Get the System Running in Approximately 30 Seconds:**
+
+1. **Start MongoDB:** Open PowerShell and execute:
+   `net start MongoDB`
+2. **Install all required dependencies:**
+   `py -3.12 -m pip install -r requirements.txt`
+3. **Launch the graphical interface:** Double-click `run_api.bat`.
+4. **Access the premium dashboard:** The browser will automatically open:
+   **http://127.0.0.1:8000**
+
+### 2.1 Core Software Requirements
+
+1. **Operating System:** Windows 10 or Windows 11 (64-bit).
+2. **Required Python Version:** **Python 3.12 (64-bit)**.
+3. **MongoDB:**
+
+   * Version: MongoDB Community Server 7.0 or later.
+   * Default connection string: `mongodb://localhost:27017/`
+4. **Java Environment:** Java JDK 17 or JDK 21 for Apache Spark processing of large files.
+
+### 2.2 Installing Dependencies
+
+Open a terminal inside the project directory and execute:
+
+```bash
+py -3.12 -m pip install -r requirements.txt
+```
+
+### 2.3 Environment Variables
+
+The project operates with suitable local-development defaults and does not require configuration changes. If customization is required:
+
+```bash
+copy .env.example .env
+```
+
+---
+
+## 3. ⚡ Quick Project Execution Methods
+
+The project has been deliberately engineered to provide maximum operational flexibility and can be executed and tested through **seven integrated methods**.
+
+### 3.1 One-Click Automatic Execution — `run_api.bat`
+
+**Execution method:** Double-click `run_api.bat` in the project root directory.
+
+The script automatically:
+
+1. Launches the **FastAPI** server in the background using Python 3.12.
+2. Opens the default web browser at:
+   **http://127.0.0.1:8000**
+3. Keeps the API process active in the command window so that live HTTP request logs can be monitored.
+
+### 3.2 Glassmorphism Web Dashboard
+
+When the browser opens **http://127.0.0.1:8000**, the complete control dashboard becomes available.
+
+#### 1. Language Switcher
+
+A dedicated top-level control instantly switches the interface between **Arabic** and **English**, while automatically changing the layout direction between **RTL** and **LTR**.
+
+#### 2. Live KPI Counters
+
+The dashboard displays real-time statistics for:
+
+* Raw records: `orders_raw`
+* Validated records: `orders_validated`
+* Quarantined records: `orders_quarantine`
+
+It also displays the consistency-equation status:
+
+`Balanced: Verified 100%`
+
+#### 3. Pipeline Execution
+
+The dashboard provides a prominent:
+
+`Run Ingestion`
+
+button.
+
+When activated, it sends:
+
+`POST /ingest`
+
+and launches a dynamic processing indicator displaying processing status, throughput, and batch information.
+
+#### 4. Five Aggregation Tabs
+
+The dashboard provides interactive analytical views for:
+
+* Sales by City
+* Top Products
+* Top Customers
+* Sales by Period
+* Order Status Distribution
+
+#### 5. Explain Plan Visualizer
+
+A graphical comparison demonstrates the difference between:
+
+* Full Collection Scan: `COLLSCAN`
+* Compound Index Scan: `IXSCAN`
+
+The visualization demonstrates the dramatic reduction in examined documents.
+
+#### 6. Materialized View Refresh
+
+The dashboard provides an incremental refresh operation:
+
+`POST /refresh-mv?incremental=true`
+
+with the resulting performance displayed immediately.
+
+#### 7. Background Job Management
+
+Users can inspect job status, manually trigger scheduled tasks, and review the `job_logs` audit records.
+
+---
+
+## 4. 🔷 Part One: Midterm Project — Phase 1
+
+### 4.1 ELT Pipeline Architecture and Automatic Engine Routing
+
+The system follows the modern **ELT (Extract, Load, Transform)** architecture:
+
+1. **Raw Ingestion:**
+   Every source-file record is loaded into `orders_raw` without deletion or modification. Six metadata fields are attached:
+
+   `run_id`, `source_file`, `source_row_number`, `ingested_at`, `engine_used`, `raw_record`.
+
+2. **Intelligent File Router:**
+
+   * If file size ≤ **200 MB**, processing is automatically routed to the high-speed `python_batch` streaming engine.
+   * If file size > **200 MB**, processing is routed to the distributed `pyspark` engine.
+
+3. **ELT Transformation and Classification:**
+
+   The transformation engine reads records from `orders_raw` in controlled batches and applies the data-quality rules.
+
+   Records are classified into:
+
+   * `orders_validated`: Valid records and safely corrected records, accompanied by a `corrections` audit trail.
+   * `orders_quarantine`: Records containing critical errors that cannot be safely repaired, accompanied by `quarantine_reasons`.
+
+### 4.2 Ten Data Quality and Cleaning Rules
+
+| #  | Rule                                 | Target Field     | Dirty Input           | Clean Output         |
+| -- | ------------------------------------ | ---------------- | --------------------- | -------------------- |
+| 1  | `arabic_digits_delivery_cost`        | `delivery_cost`  | `"١٥٠٠"`              | `1500.0`             |
+| 2  | `arabic_digits_payment_amount`       | `payment_amount` | `"٢٥٠٠٠.٥٠"`          | `25000.50`           |
+| 3  | `price_with_thousands_commas`        | Price fields     | `"1,250,000"`         | `1250000.0`          |
+| 4  | `email_double_at`                    | `customer_email` | `"user@@example.com"` | `"user@example.com"` |
+| 5  | `phone_with_country_code`            | `customer_phone` | `"+967771234567"`     | `"771234567"`        |
+| 6  | `date_dd_mm_yyyy`                    | `order_date`     | `"25-12-2023"`        | `"2023-12-25"`       |
+| 7  | `currency_arabic_name`               | `currency`       | `"ريال يمني"`         | `"YER"`              |
+| 8  | `status_extra_spaces`                | `status`         | `" DELIVERED "`       | `"DELIVERED"`        |
+| 9  | `qty_as_string_in_items`             | `items_json`     | `'[{"qty":"3"}]'`     | `[{"qty":3}]`        |
+| 10 | `total_amount_mismatch_recomputable` | `total_amount`   | Incorrect total       | Recalculated total   |
+
+The fundamental financial calculation is:
+
+$$
+Total = \sum(price \times quantity) + delivery\_cost
+$$
+
+### Audit Trail
+
+Every corrected record maintains a detailed `corrections` object documenting:
+
+* The rule applied.
+* The affected field.
+* The original value.
+* The corrected value.
+* The timestamp at which the correction was applied.
+
+---
+
+## 4.3 Quarantine Conditions
+
+Records containing critical structural or logical errors that cannot be safely predicted or automatically repaired are moved to `orders_quarantine`.
+
+The twelve quarantine conditions include:
+
+1. `missing_order_id`
+2. `missing_customer_id`
+3. `invalid_phone_too_short`
+4. `email_missing_domain`
+5. `invalid_date_impossible`
+6. `unknown_order_status`
+7. `empty_items`
+8. `corrupted_items_json`
+9. `missing_item_sku`
+10. `negative_quantity`
+11. `unknown_currency`
+12. `multiple_conflicting_errors`
+
+The guiding principle is simple:
+
+> **When automatic correction could compromise data integrity, the record must be quarantined rather than modified unpredictably.**
+
+---
+
+## 4.4 Reliability and Idempotency
+
+### Schema Validation
+
+The `orders_validated` collection uses MongoDB `$jsonSchema` validation to reject incomplete documents or documents containing invalid data types.
+
+Key requirements include:
+
+* `order_id`: required unique string.
+* `customer_id`: required string.
+* `total_amount`: required positive numeric value.
+* `status`: restricted to:
+  `PENDING`, `PROCESSING`, `SHIPPED`, `DELIVERED`, `CANCELLED`, `RETURNED`.
+
+### Idempotent Upsert
+
+The system uses:
+
+```python
+pymongo.UpdateOne(
+    {"order_id": doc["order_id"]},
+    {"$set": doc},
+    upsert=True
+)
+```
+
+This guarantees that even if the pipeline is executed repeatedly, the database does not accumulate duplicate records.
+
+**Result: `Duplicates = 0`.**
+
+---
+
+## 4.5 Dual Checkpointing
+
+To protect the processing workflow against unexpected interruptions such as power failures or server shutdowns, the system implements two checkpoint mechanisms:
+
+### 1. MongoDB Checkpoint
+
+Processing state is periodically stored in:
+
+`elt_checkpoints`
+
+including:
+
+* `run_id`
+* `last_processed_id`
+* `processed_count`
+* `updated_at`
+
+### 2. Local Backup Checkpoint
+
+A JSON backup is maintained at:
+
+```text
+data/checkpoints/checkpoint_{run_id}.json
+```
+
+### 3. Immediate Resume
+
+After restarting, the engine identifies the last processed `_id` and resumes processing using:
+
+```json
+{"_id": {"$gt": last_processed_id}}
+```
+
+This prevents unnecessary reprocessing.
+
+---
+
+## 4.6 Core Consistency Equation
+
+The fundamental requirement is:
+
+$$
+Raw\ Total = Valid\ (Clean) + Corrected + Quarantined
+$$
+
+For the approved 20,000-record test dataset:
+
+* **Valid Clean:** 12,000 records — 60%
+* **Corrected:** 5,000 records — 25%
+* **Quarantined:** 3,000 records — 15%
+
+Therefore:
+
+$$
+12,000 + 5,000 + 3,000 = 20,000
+$$
+
+### Final Status
+
+**Balanced: Verified — 100% consistency**
+
+**Duplicates: 0**
+
+---
+
+## 5. 🔶 Part Two: Final Project — Phase 2
+
+### 5.1 Premium Interactive Glassmorphism Web Dashboard
+
+The interface adopts a modern **Glassmorphism Dark Cosmic Theme**, delivering a sophisticated user experience through:
+
+* Cosmic glowing background effects.
+* Frosted-glass visual components using `backdrop-filter: blur(16px)`.
+* Full Arabic/English bilingual support.
+* Live statistical cards.
+* Dynamic processing indicators.
+* Interactive charts and data tables.
+
+---
+
+## 5.2 Four Indexes and Five Queries
+
+The project implements four optimized MongoDB indexes:
+
+1. `idx_customer_date`
+   Compound index on `(customer_id: 1, order_date: -1)`.
+
+2. `idx_date_status`
+   Compound index on `(order_date: 1, status: 1)`.
+
+3. `idx_total_amount`
+   Single-field index on `(total_amount: -1)`.
+
+4. `idx_city_delivery`
+   Compound index on `(city: 1, delivery_type: 1)`.
+
+### Five Defined Queries
+
+1. `customer_orders`
+2. `orders_by_date_and_status`
+3. `high_value_orders`
+4. `city_delivery_orders`
+5. `orders_by_payment`
+
+### Explain Performance Analysis
+
+| Technical Metric   | Without Index — COLLSCAN | With Compound Index — IXSCAN |
+| ------------------ | -----------------------: | ---------------------------: |
+| Execution Stage    |     Full collection scan |          Compound index scan |
+| Documents Examined |            **1,842,067** |               **1 document** |
+| Execution Time     |             **1,255 ms** |                     **0 ms** |
+
+The result demonstrates a dramatic reduction in the amount of data examined and a substantial improvement in query performance.
+
+---
+
+## 5.3 Five Statistical Aggregation Pipelines
+
+The system uses MongoDB aggregation pipelines together with safe `$convert` expressions and `onError: 0.0` handling.
+
+The five pipelines are:
+
+1. `sales_by_city` — Total sales, order count, and average basket value by city.
+2. `top_products` — Identification of the best-selling and highest-revenue products.
+3. `top_customers` — Identification of the highest-spending and most frequent customers.
+4. `sales_by_period` — Monthly and daily revenue analysis.
+5. `orders_by_status` — Distribution of order statuses and total financial value by status.
+
+---
+
+## 5.4 Materialized Views and Intelligent Incremental Refresh
+
+The project maintains two materialized views:
+
+1. `daily_sales_summary`
+2. `top_products_summary`
+
+### Intelligent Incremental Refresh
+
+The system maintains a synchronization marker:
+
+`last_synced_id`
+
+inside:
+
+`mv_metadata`
+
+When new records arrive, only records satisfying:
+
+```text
+_id > last_synced_id
+```
+
+are processed.
+
+The aggregate values are then updated incrementally using atomic `$inc` and `$set` operations rather than rescanning millions of records.
+
+---
+
+## 5.5 Background Scheduler and Job Logs
+
+The project provides two primary scheduled jobs:
+
+1. `refresh_materialized_views_job`
+2. `periodic_kpi_report_job`
+
+All scheduled operations are recorded in the MongoDB `job_logs` collection, providing a complete and auditable execution history.
+
+A typical successful job record includes:
+
+```json
+{
+  "job_name": "refresh_materialized_views_job",
+  "status": "SUCCESS",
+  "started_at": "2026-10-04T14:00:00Z",
+  "completed_at": "2026-10-04T14:00:00.015Z",
+  "duration_seconds": 0.015,
+  "records_affected": 250
+}
+```
+
+---
+
+## 5.6 FastAPI Service Gateway and 12 Integrated Endpoints
+
+The project exposes twelve integrated API endpoints through **FastAPI** and documents them through **Swagger UI**.
+
+| #  | Endpoint               | Method | Technical Function                            |
+| -- | ---------------------- | ------ | --------------------------------------------- |
+| 1  | `/health`              | GET    | System health and database connectivity check |
+| 2  | `/metrics`             | GET    | Record statistics and consistency status      |
+| 3  | `/ingest`              | POST   | Execute the hybrid ingestion pipeline         |
+| 4  | `/indexes`             | POST   | Build indexes and execute Explain analysis    |
+| 5  | `/queries`             | GET    | List available queries                        |
+| 6  | `/queries/{name}`      | GET    | Execute a specific query                      |
+| 7  | `/aggregations`        | GET    | List aggregation reports                      |
+| 8  | `/aggregations/{name}` | GET    | Execute a specific aggregation                |
+| 9  | `/refresh-mv`          | POST   | Incrementally refresh materialized views      |
+| 10 | `/views/daily-sales`   | GET    | Retrieve daily sales materialized-view data   |
+| 11 | `/jobs`                | GET    | Display scheduled jobs and job logs           |
+| 12 | `/jobs/{name}/run`     | POST   | Manually execute a scheduled job              |
+
+---
+
+## 6. 📊 MongoDB Data Schemas and Collections
+
+**Database:** `ecommerce_db`
+
+```text
+ecommerce_db
+├── orders_raw
+├── orders_validated
+├── orders_quarantine
+├── elt_checkpoints
+├── daily_sales_summary
+├── top_products_summary
+├── mv_metadata
+└── job_logs
+```
+
+Each collection has a clearly defined responsibility within the overall data architecture.
+
+---
+
+## 7. 🛠️ Troubleshooting Guide
+
+### Problem 1: `ServerSelectionTimeoutError`
+
+**Cause:** MongoDB is not running.
+
+**Solution:**
+
+```powershell
+net start MongoDB
+```
+
+### Problem 2: Python Version or Library Path Errors
+
+**Cause:** Multiple Python versions are installed, such as Python 3.13 being the default while the project requires Python 3.12.
+
+**Solution:** Explicitly target Python 3.12:
+
+```bash
+py -3.12 -m pip install -r requirements.txt
+py -3.12 main.py --file data/01_student_test_small.csv
+```
+
+### Problem 3: `Address already in use`
+
+**Cause:** Port 8000 is already occupied.
+
+**Solution:** Use another port:
+
+```bash
+py -3.12 -m uvicorn src.api:app --host 127.0.0.1 --port 8080 --reload
+```
+
+### Problem 4: Apache Spark or `JAVA_HOME` Warnings
+
+For files smaller than 200 MB, the system automatically uses the high-speed Python Batch engine and does not require Spark.
+
+For larger files, install **JDK 17** and configure `JAVA_HOME`.
+
+---
+
+# 8. 🎙️ Comprehensive Defense Walkthrough
+
+To deliver an outstanding **10-minute project defense**, follow this sequence.
+
+## 🎙️ Minutes 1–5 — Phase 1
+
+### Step 1 — File Router
+
+Run:
+
+```bash
+py -3.12 main.py --file data/01_student_test_small.csv
+```
+
+Explain how the router determines that the file size is approximately **8.6 MB** and therefore automatically selects the **Python Batch** engine rather than Spark.
+
+### Step 2 — Raw Ingestion
+
+Open **MongoDB Compass** and display the `orders_raw` collection.
+
+Demonstrate that all **20,000 records** were ingested without deletion or modification, together with the six metadata fields:
+
+`run_id`, `source_file`, `source_row_number`, `ingested_at`, `engine_used`, `raw_record`.
+
+### Step 3 — Data Quality and Audit Trail
+
+Open `orders_validated` and display a corrected record.
+
+Demonstrate the `corrections` array and explain how it records the exact correction history.
+
+Then open `orders_quarantine` and demonstrate a quarantined record together with its `quarantine_reasons`.
+
+### Step 4 — Consistency and Idempotency
+
+Open:
+
+`reports/results.json`
+
+and demonstrate:
+
+$$
+12,000 + 5,000 + 3,000 = 20,000
+$$
+
+Then rerun the pipeline and demonstrate that the number of records does not increase and that:
+
+**`0 Duplicates`**
+
+is maintained.
+
+---
+
+## 🎙️ Minutes 6–10 — Phase 2
+
+### Step 1 — Glassmorphism Dashboard
+
+Launch:
+
+`run_api.bat`
+
+or navigate to:
+
+`http://127.0.0.1:8000`
+
+Demonstrate the premium bilingual interface and switch between Arabic and English.
+
+### Step 2 — Live Ingestion
+
+Click:
+
+**Run Ingestion**
+
+and allow the evaluation committee to observe the live processing of the **20,000 records**.
+
+### Step 3 — Indexes and Explain Analysis
+
+Display the index comparison and demonstrate the reduction from:
+
+**1,842,067 examined documents (`COLLSCAN`)**
+
+to:
+
+**1 examined document (`IXSCAN`)**
+
+### Step 4 — Five Aggregation Pipelines
+
+Navigate through the analytics tabs covering:
+
+* Cities
+* Products
+* Customers
+* Time periods
+* Order statuses
+
+and demonstrate the accuracy of the statistical results.
+
+### Step 5 — Materialized Views
+
+Trigger:
+
+**Incremental Materialized View Refresh**
+
+and demonstrate the extremely fast update process.
+
+### Step 6 — Automated Testing
+
+Finally, execute:
+
+```bash
+py -3.12 -m pytest tests/ -v
+```
+
+and demonstrate the final result:
+
+**75/75 tests passed — 100% success rate.**
+
+---
+
+## 🏆 Final Project Positioning
+
+This architecture presents a complete **enterprise-grade hybrid data pipeline** that integrates:
+
+**Data Ingestion → Data Quality → ELT Transformation → MongoDB → Indexing → Aggregation → Materialized Views → Scheduling → FastAPI → Interactive Dashboard → Automated Testing**
+
+The result is a robust, scalable, auditable, and highly optimized Big Data solution designed to demonstrate both **practical engineering capability** and **academic mastery of modern data-processing architectures**.
